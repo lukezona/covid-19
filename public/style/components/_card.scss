@@ -1,0 +1,83 @@
+.card {
+  --card-color: var(--color-primary);
+  background: alpha(var(--color-white), .05);
+  border-radius: var(--radius);
+  cursor: default;
+  padding: var(--space-sm);
+  text-align: center;
+  transition: all .3s var(--ease-out);
+
+  &__title {
+    padding-bottom: var(--space-xxxs);
+  }
+
+  &__value {
+    font-size: var(--text-xxxl);
+    position: relative;
+
+    &::after {
+      content: '';
+      background-color: var(--card-color);
+      bottom: 7px;
+      height: 15px;
+      left: 0;
+      opacity: .25;
+      position: absolute;
+      transition: all .3s var(--ease-in-out);
+      width: 90%;
+      z-index: 1;
+    }
+
+  }
+
+  &__info {
+    font-size: var(--text-xs);
+  }
+
+  &:hover {
+    .card__value::after {
+      opacity: .6;
+      width: 100%;
+      z-index: -1;
+    }
+  }
+
+  &--totali {
+    --card-color: var(--color-totali);
+  }
+
+  &--positivi {
+    --card-color: var(--color-positivi);
+  }
+
+  &--deceduti {
+    --card-color: var(--color-deceduti);
+  }
+
+  &--guariti {
+    --card-color: var(--color-guariti);
+  }
+
+  &--alert {
+    background-color: alpha(var(--color-positivi), .5);
+    margin-top: var(--space-xs);
+    padding: var(--space-xs);
+
+    &:hover {
+      background-color: alpha(var(--color-positivi), .85);
+    }
+
+  }
+
+}
+
+.recap-cards {
+  display: grid;
+  grid-gap: var(--space-sm);
+  grid-template-columns: repeat(2, 1fr);
+
+  @include breakpoint(sm) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+}

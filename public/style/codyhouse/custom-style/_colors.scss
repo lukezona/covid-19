@@ -1,0 +1,249 @@
+:root, [data-theme="default"] {
+  // main
+  @include defineColorHSL(--color-primary-darker, 212, 100%, 27%);
+  @include defineColorHSL(--color-primary-dark, 212, 100%, 37%);
+  @include defineColorHSL(--color-primary, 212, 100%, 47%);
+  @include defineColorHSL(--color-primary-light, 212, 100%, 57%);
+  @include defineColorHSL(--color-primary-lighter, 212, 100%, 67%);
+
+  @include defineColorHSL(--color-accent-darker, 42, 100%, 30%);
+  @include defineColorHSL(--color-accent-dark, 42, 100%, 40%);
+  @include defineColorHSL(--color-accent, 42, 100%, 50%);
+  @include defineColorHSL(--color-accent-light, 42, 100%, 60%);
+  @include defineColorHSL(--color-accent-lighter, 42, 100%, 70%);
+
+  @include defineColorHSL(--color-guariti-darker, 122, 39%, 29%);
+  @include defineColorHSL(--color-guariti-dark, 122, 39%, 39%);
+  @include defineColorHSL(--color-guariti, 122, 39%, 49%);
+  @include defineColorHSL(--color-guariti-light, 122, 39%, 59%);
+  @include defineColorHSL(--color-guariti-lighter, 122, 39%, 69%);
+
+  @include defineColorHSL(--color-deceduti-darker, 0, 65%, 31%);
+  @include defineColorHSL(--color-deceduti-dark, 0, 65%, 41%);
+  @include defineColorHSL(--color-deceduti, 0, 65%, 51%);
+  @include defineColorHSL(--color-deceduti-light, 0, 65%, 61%);
+  @include defineColorHSL(--color-deceduti-lighter, 0, 65%, 71%);
+
+  @include defineColorHSL(--color-positivi-darker, 45, 100%, 31%);
+  @include defineColorHSL(--color-positivi-dark, 45, 100%, 41%);
+  @include defineColorHSL(--color-positivi, 45, 100%, 51%);
+  @include defineColorHSL(--color-positivi-light, 45, 100%, 61%);
+  @include defineColorHSL(--color-positivi-lighter, 45, 100%, 71%);
+
+  @include defineColorHSL(--color-totali-darker, 212, 100%, 27%);
+  @include defineColorHSL(--color-totali-dark, 212, 100%, 37%);
+  @include defineColorHSL(--color-totali, 212, 100%, 47%);
+  @include defineColorHSL(--color-totali-light, 212, 100%, 57%);
+  @include defineColorHSL(--color-totali-lighter, 212, 100%, 67%);
+
+  @include defineColorHSL(--color-rianimazione-darker, 36, 100%, 30%);
+  @include defineColorHSL(--color-rianimazione-dark, 36, 100%, 40%);
+  @include defineColorHSL(--color-rianimazione, 36, 100%, 50%);
+  @include defineColorHSL(--color-rianimazione-light, 36, 100%, 60%);
+  @include defineColorHSL(--color-rianimazione-lighter, 36, 100%, 70%);
+
+  @include defineColorHSL(--color-isolamento-darker, 199, 98%, 28%);
+  @include defineColorHSL(--color-isolamento-dark, 199, 98%, 38%);
+  @include defineColorHSL(--color-isolamento, 199, 98%, 48%);
+  @include defineColorHSL(--color-isolamento-light, 199, 98%, 58%);
+  @include defineColorHSL(--color-isolamento-lighter, 199, 98%, 68%);
+
+  @include defineColorHSL(--color-ricoverati-darker, 54, 100%, 42%);
+  @include defineColorHSL(--color-ricoverati-dark, 54, 100%, 52%);
+  @include defineColorHSL(--color-ricoverati, 54, 100%, 62%);
+  @include defineColorHSL(--color-ricoverati-light, 54, 100%, 72%);
+  @include defineColorHSL(--color-ricoverati-lighter, 54, 100%, 82%);
+
+  @include defineColorHSL(--color-black, 225, 6%, 13%);
+  @include defineColorHSL(--color-white, 0, 0%, 100%);
+
+  // feedback
+  @include defineColorHSL(--color-warning-darker, 46, 100%, 41%);
+  @include defineColorHSL(--color-warning-dark, 46, 100%, 51%);
+  @include defineColorHSL(--color-warning, 46, 100%, 61%);
+  @include defineColorHSL(--color-warning-light, 46, 100%, 71%);
+  @include defineColorHSL(--color-warning-lighter, 46, 100%, 81%);
+
+  @include defineColorHSL(--color-success-darker, 94, 48%, 36%);
+  @include defineColorHSL(--color-success-dark, 94, 48%, 46%);
+  @include defineColorHSL(--color-success, 94, 48%, 56%);
+  @include defineColorHSL(--color-success-light, 94, 48%, 66%);
+  @include defineColorHSL(--color-success-lighter, 94, 48%, 76%);
+
+  @include defineColorHSL(--color-error-darker, 349, 75%, 31%);
+  @include defineColorHSL(--color-error-dark, 349, 75%, 41%);
+  @include defineColorHSL(--color-error, 349, 75%, 51%);
+  @include defineColorHSL(--color-error-light, 349, 75%, 61%);
+  @include defineColorHSL(--color-error-lighter, 349, 75%, 71%);
+
+  // color contrasts
+  @include defineColorHSL(--color-bg, 0, 0%, 100%);
+  @include defineColorHSL(--color-contrast-lower, 0, 0%, 95%);
+  @include defineColorHSL(--color-contrast-low, 240, 1%, 83%);
+  @include defineColorHSL(--color-contrast-medium, 240, 1%, 48%);
+  @include defineColorHSL(--color-contrast-high, 240, 4%, 20%);
+  @include defineColorHSL(--color-contrast-higher, 240, 8%, 12%);
+}
+
+@supports(--css: variables) {
+  [data-theme="dark"] {
+    // main
+    @include defineColorHSL(--color-primary-darker, 225, 6%, 0%);
+    @include defineColorHSL(--color-primary-dark, 225, 6%, 6%);
+    @include defineColorHSL(--color-primary, 225, 6%, 13%);
+    @include defineColorHSL(--color-primary-light, 225, 6%, 23%);
+    @include defineColorHSL(--color-primary-lighter, 225, 6%, 33%);
+
+    @include defineColorHSL(--color-accent-darker, 349, 75%, 31%);
+    @include defineColorHSL(--color-accent-dark, 349, 75%, 41%);
+    @include defineColorHSL(--color-accent, 349, 75%, 51%);
+    @include defineColorHSL(--color-accent-light, 349, 75%, 61%);
+    @include defineColorHSL(--color-accent-lighter, 349, 75%, 71%);
+
+    @include defineColorHSL(--color-guariti-darker, 122, 39%, 29%);
+    @include defineColorHSL(--color-guariti-dark, 122, 39%, 39%);
+    @include defineColorHSL(--color-guariti, 122, 39%, 49%);
+    @include defineColorHSL(--color-guariti-light, 122, 39%, 59%);
+    @include defineColorHSL(--color-guariti-lighter, 122, 39%, 69%);
+
+    @include defineColorHSL(--color-deceduti-darker, 4, 90%, 38%);
+    @include defineColorHSL(--color-deceduti-dark, 4, 90%, 48%);
+    @include defineColorHSL(--color-deceduti, 4, 90%, 58%);
+    @include defineColorHSL(--color-deceduti-light, 4, 90%, 68%);
+    @include defineColorHSL(--color-deceduti-lighter, 4, 90%, 78%);
+
+    @include defineColorHSL(--color-positivi-darker, 45, 100%, 31%);
+    @include defineColorHSL(--color-positivi-dark, 45, 100%, 41%);
+    @include defineColorHSL(--color-positivi, 45, 100%, 51%);
+    @include defineColorHSL(--color-positivi-light, 45, 100%, 61%);
+    @include defineColorHSL(--color-positivi-lighter, 45, 100%, 71%);
+
+    @include defineColorHSL(--color-totali-darker, 256, 100%, 45%);
+    @include defineColorHSL(--color-totali-dark, 256, 100%, 55%);
+    @include defineColorHSL(--color-totali, 256, 100%, 65%);
+    @include defineColorHSL(--color-totali-light, 256, 100%, 75%);
+    @include defineColorHSL(--color-totali-lighter, 256, 100%, 85%);
+
+    @include defineColorHSL(--color-rianimazione-darker, 340, 82%, 32%);
+    @include defineColorHSL(--color-rianimazione-dark, 340, 82%, 42%);
+    @include defineColorHSL(--color-rianimazione, 340, 82%, 52%);
+    @include defineColorHSL(--color-rianimazione-light, 340, 82%, 62%);
+    @include defineColorHSL(--color-rianimazione-lighter, 340, 82%, 72%);
+
+    @include defineColorHSL(--color-isolamento-darker, 212, 100%, 27%);
+    @include defineColorHSL(--color-isolamento-dark, 212, 100%, 37%);
+    @include defineColorHSL(--color-isolamento, 212, 100%, 47%);
+    @include defineColorHSL(--color-isolamento-light, 212, 100%, 57%);
+    @include defineColorHSL(--color-isolamento-lighter, 212, 100%, 67%);
+
+    @include defineColorHSL(--color-ricoverati-darker, 212, 100%, 27%);
+    @include defineColorHSL(--color-ricoverati-dark, 212, 100%, 37%);
+    @include defineColorHSL(--color-ricoverati, 212, 100%, 47%);
+    @include defineColorHSL(--color-ricoverati-light, 212, 100%, 57%);
+    @include defineColorHSL(--color-ricoverati-lighter, 212, 100%, 67%);
+
+    @include defineColorHSL(--color-black, 0, 0%, 100%);
+    @include defineColorHSL(--color-white, 225, 6%, 13%);
+
+    // feedback
+    @include defineColorHSL(--color-warning-darker, 46, 100%, 41%);
+    @include defineColorHSL(--color-warning-dark, 46, 100%, 51%);
+    @include defineColorHSL(--color-warning, 46, 100%, 61%);
+    @include defineColorHSL(--color-warning-light, 46, 100%, 71%);
+    @include defineColorHSL(--color-warning-lighter, 46, 100%, 81%);
+
+    @include defineColorHSL(--color-success-darker, 94, 48%, 36%);
+    @include defineColorHSL(--color-success-dark, 94, 48%, 46%);
+    @include defineColorHSL(--color-success, 94, 48%, 56%);
+    @include defineColorHSL(--color-success-light, 94, 48%, 66%);
+    @include defineColorHSL(--color-success-lighter, 94, 48%, 76%);
+
+    @include defineColorHSL(--color-error-darker, 349, 75%, 31%);
+    @include defineColorHSL(--color-error-dark, 349, 75%, 41%);
+    @include defineColorHSL(--color-error, 349, 75%, 51%);
+    @include defineColorHSL(--color-error-light, 349, 75%, 61%);
+    @include defineColorHSL(--color-error-lighter, 349, 75%, 71%);
+
+    // color contrasts
+    @include defineColorHSL(--color-bg, 0, 0%, 100%);
+    @include defineColorHSL(--color-contrast-lower, 0, 0%, 95%);
+    @include defineColorHSL(--color-contrast-low, 240, 1%, 83%);
+    @include defineColorHSL(--color-contrast-medium, 240, 1%, 48%);
+    @include defineColorHSL(--color-contrast-high, 240, 4%, 20%);
+    @include defineColorHSL(--color-contrast-higher, 240, 8%, 12%);
+  }
+}
+
+// background-color
+.bg-guariti-darker { background-color: alpha(var(--color-guariti-darker), var(--bg-o, 1)); }
+.bg-guariti-dark { background-color: alpha(var(--color-guariti-dark), var(--bg-o, 1)); }
+.bg-guariti { background-color: alpha(var(--color-guariti), var(--bg-o, 1)); }
+.bg-guariti-light { background-color: alpha(var(--color-guariti-light), var(--bg-o, 1)); }
+.bg-guariti-lighter { background-color: alpha(var(--color-guariti-lighter), var(--bg-o, 1)); }
+.bg-deceduti-darker { background-color: alpha(var(--color-deceduti-darker), var(--bg-o, 1)); }
+.bg-deceduti-dark { background-color: alpha(var(--color-deceduti-dark), var(--bg-o, 1)); }
+.bg-deceduti { background-color: alpha(var(--color-deceduti), var(--bg-o, 1)); }
+.bg-deceduti-light { background-color: alpha(var(--color-deceduti-light), var(--bg-o, 1)); }
+.bg-deceduti-lighter { background-color: alpha(var(--color-deceduti-lighter), var(--bg-o, 1)); }
+.bg-positivi-darker { background-color: alpha(var(--color-positivi-darker), var(--bg-o, 1)); }
+.bg-positivi-dark { background-color: alpha(var(--color-positivi-dark), var(--bg-o, 1)); }
+.bg-positivi { background-color: alpha(var(--color-positivi), var(--bg-o, 1)); }
+.bg-positivi-light { background-color: alpha(var(--color-positivi-light), var(--bg-o, 1)); }
+.bg-positivi-lighter { background-color: alpha(var(--color-positivi-lighter), var(--bg-o, 1)); }
+.bg-totali-darker { background-color: alpha(var(--color-totali-darker), var(--bg-o, 1)); }
+.bg-totali-dark { background-color: alpha(var(--color-totali-dark), var(--bg-o, 1)); }
+.bg-totali { background-color: alpha(var(--color-totali), var(--bg-o, 1)); }
+.bg-totali-light { background-color: alpha(var(--color-totali-light), var(--bg-o, 1)); }
+.bg-totali-lighter { background-color: alpha(var(--color-totali-lighter), var(--bg-o, 1)); }
+.bg-rianimazione-darker { background-color: alpha(var(--color-rianimazione-darker), var(--bg-o, 1)); }
+.bg-rianimazione-dark { background-color: alpha(var(--color-rianimazione-dark), var(--bg-o, 1)); }
+.bg-rianimazione { background-color: alpha(var(--color-rianimazione), var(--bg-o, 1)); }
+.bg-rianimazione-light { background-color: alpha(var(--color-rianimazione-light), var(--bg-o, 1)); }
+.bg-rianimazione-lighter { background-color: alpha(var(--color-rianimazione-lighter), var(--bg-o, 1)); }
+.bg-isolamento-darker { background-color: alpha(var(--color-isolamento-darker), var(--bg-o, 1)); }
+.bg-isolamento-dark { background-color: alpha(var(--color-isolamento-dark), var(--bg-o, 1)); }
+.bg-isolamento { background-color: alpha(var(--color-isolamento), var(--bg-o, 1)); }
+.bg-isolamento-light { background-color: alpha(var(--color-isolamento-light), var(--bg-o, 1)); }
+.bg-isolamento-lighter { background-color: alpha(var(--color-isolamento-lighter), var(--bg-o, 1)); }
+.bg-ricoverati-darker { background-color: alpha(var(--color-ricoverati-darker), var(--bg-o, 1)); }
+.bg-ricoverati-dark { background-color: alpha(var(--color-ricoverati-dark), var(--bg-o, 1)); }
+.bg-ricoverati { background-color: alpha(var(--color-ricoverati), var(--bg-o, 1)); }
+.bg-ricoverati-light { background-color: alpha(var(--color-ricoverati-light), var(--bg-o, 1)); }
+.bg-ricoverati-lighter { background-color: alpha(var(--color-ricoverati-lighter), var(--bg-o, 1)); }
+
+// border-color
+.border-guariti-darker { border-color: alpha(var(--color-guariti-darker), var(--bg-o, 1)); }
+.border-guariti-dark { border-color: alpha(var(--color-guariti-dark), var(--bg-o, 1)); }
+.border-guariti { border-color: alpha(var(--color-guariti), var(--bg-o, 1)); }
+.border-guariti-light { border-color: alpha(var(--color-guariti-light), var(--bg-o, 1)); }
+.border-guariti-lighter { border-color: alpha(var(--color-guariti-lighter), var(--bg-o, 1)); }
+.border-deceduti-darker { border-color: alpha(var(--color-deceduti-darker), var(--bg-o, 1)); }
+.border-deceduti-dark { border-color: alpha(var(--color-deceduti-dark), var(--bg-o, 1)); }
+.border-deceduti { border-color: alpha(var(--color-deceduti), var(--bg-o, 1)); }
+.border-deceduti-light { border-color: alpha(var(--color-deceduti-light), var(--bg-o, 1)); }
+.border-deceduti-lighter { border-color: alpha(var(--color-deceduti-lighter), var(--bg-o, 1)); }
+.border-positivi-darker { border-color: alpha(var(--color-positivi-darker), var(--bg-o, 1)); }
+.border-positivi-dark { border-color: alpha(var(--color-positivi-dark), var(--bg-o, 1)); }
+.border-positivi { border-color: alpha(var(--color-positivi), var(--bg-o, 1)); }
+.border-positivi-light { border-color: alpha(var(--color-positivi-light), var(--bg-o, 1)); }
+.border-positivi-lighter { border-color: alpha(var(--color-positivi-lighter), var(--bg-o, 1)); }
+.border-totali-darker { border-color: alpha(var(--color-totali-darker), var(--bg-o, 1)); }
+.border-totali-dark { border-color: alpha(var(--color-totali-dark), var(--bg-o, 1)); }
+.border-totali { border-color: alpha(var(--color-totali), var(--bg-o, 1)); }
+.border-totali-light { border-color: alpha(var(--color-totali-light), var(--bg-o, 1)); }
+.border-totali-lighter { border-color: alpha(var(--color-totali-lighter), var(--bg-o, 1)); }
+.border-rianimazione-darker { border-color: alpha(var(--color-rianimazione-darker), var(--bg-o, 1)); }
+.border-rianimazione-dark { border-color: alpha(var(--color-rianimazione-dark), var(--bg-o, 1)); }
+.border-rianimazione { border-color: alpha(var(--color-rianimazione), var(--bg-o, 1)); }
+.border-rianimazione-light { border-color: alpha(var(--color-rianimazione-light), var(--bg-o, 1)); }
+.border-rianimazione-lighter { border-color: alpha(var(--color-rianimazione-lighter), var(--bg-o, 1)); }
+.border-isolamento-darker { border-color: alpha(var(--color-isolamento-darker), var(--bg-o, 1)); }
+.border-isolamento-dark { border-color: alpha(var(--color-isolamento-dark), var(--bg-o, 1)); }
+.border-isolamento { border-color: alpha(var(--color-isolamento), var(--bg-o, 1)); }
+.border-isolamento-light { border-color: alpha(var(--color-isolamento-light), var(--bg-o, 1)); }
+.border-isolamento-lighter { border-color: alpha(var(--color-isolamento-lighter), var(--bg-o, 1)); }
+.border-ricoverati-darker { border-color: alpha(var(--color-ricoverati-darker), var(--bg-o, 1)); }
+.border-ricoverati-dark { border-color: alpha(var(--color-ricoverati-dark), var(--bg-o, 1)); }
+.border-ricoverati { border-color: alpha(var(--color-ricoverati), var(--bg-o, 1)); }
+.border-ricoverati-light { border-color: alpha(var(--color-ricoverati-light), var(--bg-o, 1)); }
+.border-ricoverati-lighter { border-color: alpha(var(--color-ricoverati-lighter), var(--bg-o, 1)); }

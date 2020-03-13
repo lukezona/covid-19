@@ -1,0 +1,35 @@
+include _header
+include _footer
+
+doctype html
+html.js
+  //- HTML HEADER
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+
+    title COVID-19 - Situazione Italia aggiornata
+    //- link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
+
+    script.
+      if ( 'CSS' in window && CSS.supports('color', 'var(--color-var)') ) {
+        document.write('<link type="text/css" rel="stylesheet" href="/style/site.css">');
+      } else {
+        document.write('<link type="text/css" rel="stylesheet" href="/style/site-fallback.css">');
+      }
+    noscript
+      link(type="text/css" rel="stylesheet" href="/style/site-fallback.css")
+
+
+    block css
+    block head
+
+  body
+    +header()
+    main
+      block content
+    +footer()
+
+    script(src='/js/scripts.js')
+    block script

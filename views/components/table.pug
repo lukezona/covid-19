@@ -1,0 +1,48 @@
+mixin table(data)
+  .int-table.text-sm.js-int-table.padding-top-sm
+    .int-table__inner
+      table.int-table__table(aria-label="Tabella dati regionali")
+        thead.int-table__header.js-int-table__header: tr
+          +th('Regione')
+          +th('Positivi', true)
+          +th('Ricoverati')
+          +th('Terapia intensiva')
+          +th('Decessi')
+          +th('Guariti')
+          +th('Totale tamponi')
+
+        tbody.int-table__body.js-int-table__body
+          each item in data
+            +tr(item)
+
+
+mixin th(label, sort)
+  th.int-table__cell.int-table__cell--th.int-table__cell--sort.js-int-table__cell--sort(data-default-sort=sort)
+    .flex.items-center
+      span!= label
+      +sorting-arrow()
+    ul.sr-only.js-int-table__sort-list
+      li
+        input(type="radio" name="sortingId" id="sortingIdNone" value="none" checked)
+        label(for="sortingIdNone") Nessun ordinamento
+      li
+        input(type="radio" name="sortingId" id="sortingIdAsc" value="asc")
+        label(for="sortingIdAsc") Ordinamento crescente
+      li
+        input(type="radio" name="sortingId" id="sortingIdDes" value="desc")
+        label(for="sortingIdDes") Ordinamento decrescente
+
+mixin tr(item)
+  tr.int-table__row(data-regione=item.codice_regione)
+    td.int-table__cell(data-field='denominazione_regione')!= item.denominazione_regione
+    td.int-table__cell(data-field='totale_attualmente_positivi')!= item.totale_attualmente_positivi
+    td.int-table__cell(data-field='ricoverati_con_sintomi')!= item.ricoverati_con_sintomi
+    td.int-table__cell(data-field='terapia_intensiva')= item.terapia_intensiva
+    td.int-table__cell(data-field='deceduti')!= item.deceduti
+    td.int-table__cell(data-field='dimessi_guariti')!= item.dimessi_guariti
+    td.int-table__cell(data-field='tamponi')!= item.tamponi
+
+mixin sorting-arrow()
+  svg.icon.icon--xxs.margin-left-xxxs.int-table__sort-icon(aria-hidden="true" viewBox="0 0 12 12")
+    polygon.arrow-up(points="6 0 10 5 2 5 6 0")
+    polygon.arrow-down(points="6 12 2 7 10 7 6 12")

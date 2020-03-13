@@ -1,0 +1,58 @@
+extends ../layouts/default
+include ../components/table
+
+block content
+    .container.max-width-md
+        .padding-bottom-md.padding-top-sm
+            a(href='/'): img(src="/images/covid.svg" style='max-width: 250px')
+
+        section.recap-cards
+            .card.card--totali
+                .card__title Totale contagiati
+                span.card__value#totaleContagiati -
+            .card.card--positivi
+                .card__title Attualmente positivi
+                span.card__value#attualiContagiati -
+            .card.card--deceduti
+                .card__title Deceduti
+                span.card__value#totaleDeceduti -
+                .card__info in attesa di conferma ISS
+            .card.card--guariti
+                .card__title Guariti
+                span.card__value#totaleGuariti -
+
+        .card.card--alert: .card-title Avviso: i dati del 10/03 relativi alla Regione Lombardia non sono completi.
+        .card.card--alert: .card-title Avviso: i dati del 11/03 relativi alla Regione Abruzzo non sono stati pervenuti.
+
+        section.graphs
+            .graph
+                h4.graph__title Andamento nazionale
+                .graph__container
+                    #incrementaliNazionaliLegend
+                    canvas#incrementaliNazionali
+
+            .graph
+                h4.graph__title Incremento giornaliero
+                .graph__container
+                    #giornalieriNazionaliLegend
+                    canvas#giornalieriNazionali
+
+            .graph
+                h4.graph__title Andamento termine malattia
+                .graph__container
+                    #incrementaliTerminaliLegend
+                    canvas#incrementaliTerminali
+
+            .graph.graph--doughnut
+                h4.graph__title Tasso ospedalizzazione
+                .graph__container.flex.flex-column
+                    #tassoOspedalizzazioneLegend(style="min-width: 125px;")
+                    canvas#tassoOspedalizzazione
+
+        section#tabellaRegioni
+            h4.graph__title Dati regionali
+            +table(regioni)
+
+block script
+    script(type='text/javascript').
+        DatiProtezioneCivile.init();

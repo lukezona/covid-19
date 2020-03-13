@@ -1,0 +1,118 @@
+// --------------------------------
+
+// (START) Global Editor code https://codyhouse.co/ds/globals/typography
+
+// --------------------------------
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&display=swap');
+
+:root {
+  // font family
+  --font-primary: "Roboto Condensed", sans-serif;
+
+  // body font size
+  --text-base-size: 1em;
+  
+  // type scale
+  --text-scale-ratio: 1.2;
+  --text-xs: calc((1em / var(--text-scale-ratio)) / var(--text-scale-ratio));
+  --text-sm: calc(var(--text-xs) * var(--text-scale-ratio));
+  --text-md: calc(var(--text-sm) * var(--text-scale-ratio) * var(--text-scale-ratio));
+  --text-lg: calc(var(--text-md) * var(--text-scale-ratio));
+  --text-xl: calc(var(--text-lg) * var(--text-scale-ratio));
+  --text-xxl: calc(var(--text-xl) * var(--text-scale-ratio));
+  --text-xxxl: calc(var(--text-xxl) * var(--text-scale-ratio));
+
+  // line-height
+  --body-line-height: 1.4;
+  --heading-line-height: 1.2;
+
+  // capital letters - used in combo with the lhCrop mixin
+  --font-primary-capital-letter: 1;
+}
+
+@supports(--css: variables) {
+  :root {
+    @include breakpoint(md) {
+      --text-base-size: 1.25em;
+      --text-scale-ratio: 1.25;
+    }
+  }
+}
+
+body {
+  font-family: var(--font-primary);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-primary);
+  font-weight: 700;
+}
+
+// font family
+.font-primary { font-family: var(--font-primary);}
+
+// color
+.color-guariti-darker { color: alpha(var(--color-guariti-darker), var(--color-o, 1)); }
+.color-guariti-dark { color: alpha(var(--color-guariti-dark), var(--color-o, 1)); }
+.color-guariti { color: alpha(var(--color-guariti), var(--color-o, 1)); }
+.color-guariti-light { color: alpha(var(--color-guariti-light), var(--color-o, 1)); }
+.color-guariti-lighter { color: alpha(var(--color-guariti-lighter), var(--color-o, 1)); }
+.color-decessi-darker { color: alpha(var(--color-decessi-darker), var(--color-o, 1)); }
+.color-decessi-dark { color: alpha(var(--color-decessi-dark), var(--color-o, 1)); }
+.color-decessi { color: alpha(var(--color-decessi), var(--color-o, 1)); }
+.color-decessi-light { color: alpha(var(--color-decessi-light), var(--color-o, 1)); }
+.color-decessi-lighter { color: alpha(var(--color-decessi-lighter), var(--color-o, 1)); }
+.color-positivi-darker { color: alpha(var(--color-positivi-darker), var(--color-o, 1)); }
+.color-positivi-dark { color: alpha(var(--color-positivi-dark), var(--color-o, 1)); }
+.color-positivi { color: alpha(var(--color-positivi), var(--color-o, 1)); }
+.color-positivi-light { color: alpha(var(--color-positivi-light), var(--color-o, 1)); }
+.color-positivi-lighter { color: alpha(var(--color-positivi-lighter), var(--color-o, 1)); }
+.color-totali-darker { color: alpha(var(--color-totali-darker), var(--color-o, 1)); }
+.color-totali-dark { color: alpha(var(--color-totali-dark), var(--color-o, 1)); }
+.color-totali { color: alpha(var(--color-totali), var(--color-o, 1)); }
+.color-totali-light { color: alpha(var(--color-totali-light), var(--color-o, 1)); }
+.color-totali-lighter { color: alpha(var(--color-totali-lighter), var(--color-o, 1)); }
+.color-rianimazione-darker { color: alpha(var(--color-rianimazione-darker), var(--color-o, 1)); }
+.color-rianimazione-dark { color: alpha(var(--color-rianimazione-dark), var(--color-o, 1)); }
+.color-rianimazione { color: alpha(var(--color-rianimazione), var(--color-o, 1)); }
+.color-rianimazione-light { color: alpha(var(--color-rianimazione-light), var(--color-o, 1)); }
+.color-rianimazione-lighter { color: alpha(var(--color-rianimazione-lighter), var(--color-o, 1)); }
+
+// --------------------------------
+
+// (END) Global Editor Code
+
+// --------------------------------
+
+// link style
+a, .link {}
+
+mark {
+  background-color: alpha(var(--color-accent), 0.2);
+  color: inherit;
+}
+
+.text-component {
+  --line-height-multiplier: 1;
+  --text-vspace-multiplier: 1;
+
+  blockquote {
+    padding-left: 1em;
+    border-left: 4px solid var(--color-contrast-low);
+  }
+
+  hr {
+    background: var(--color-contrast-low);
+    height: 1px;
+  }
+
+  figcaption {
+    font-size: var(--text-sm);
+    color: var(--color-contrast-medium);
+  }
+}
+
+.article { // e.g., blog posts
+  --body-line-height: 1.58; // set body line-height
+  --text-vspace-multiplier: 1.2; // increase vertical spacing
+}

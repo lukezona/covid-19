@@ -1,0 +1,28 @@
+.graph {
+  padding: var(--space-sm) 0;
+
+  &__container {
+    width: 100%;
+  }
+
+  &--doughnut {
+
+    .chartjs-legend__color {
+      border-radius: 50%;
+      height: var(--chart-legend-color-circle);
+      width: var(--chart-legend-color-circle);
+    }
+
+  }
+
+}
+
+.graphs {
+  display: grid;
+  grid-gap: var(--space-sm);
+  grid-template-columns: repeat(1, 100%);
+
+  @include breakpoint(sm) {
+    grid-template-columns: repeat(2, 50%);
+  }
+}

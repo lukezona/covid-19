@@ -1,0 +1,38 @@
+{
+  "name": "covid-19",
+  "version": "1.0.0",
+  "description": "Web visualization for COVID-19 data from Italy",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chart.js": "^2.9.3",
+    "codyhouse-framework": "^2.5.2",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "pug": "^2.0.4"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.4.3",
+    "browser-sync": "^2.26.3",
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sass-glob": "^1.1.0",
+    "gulp-terser": "^1.2.0",
+    "gulp-uglify": "^3.0.2",
+    "postcss-calc": "^7.0.1",
+    "postcss-css-variables": "git+https://github.com/CodyHouse/postcss-css-variables"
+  },
+  "scripts": {
+    "scss": "gulp sass",
+    "js": "gulp scripts",
+    "prestart": "gulp sass && gulp scripts",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
