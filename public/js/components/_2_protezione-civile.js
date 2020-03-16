@@ -3,7 +3,7 @@
         this.urlNazionale = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale.json';
         this.urlProvince = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province.json';
         this.urlRegioni = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json';
-        this.urlIss = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json';
+        this.urlIss = 'https://raw.githubusercontent.com/lukezona/covid-19/master/json/iss-range-eta.json';
         this.dati = {
             incrementali: {
                 nazione: [],
