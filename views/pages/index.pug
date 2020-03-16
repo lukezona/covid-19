@@ -25,29 +25,41 @@ block content
         .card.card--alert: .card-title Avviso: i dati del 11/03 relativi alla Regione Abruzzo non sono stati pervenuti.
 
         section.graphs
-            .graph
+            .graph.dati-pcn
                 h4.graph__title Andamento nazionale
                 .graph__container
                     #incrementaliNazionaliLegend
                     canvas#incrementaliNazionali
 
-            .graph
+            .graph.dati-pcn
                 h4.graph__title Incremento giornaliero
                 .graph__container
                     #giornalieriNazionaliLegend
                     canvas#giornalieriNazionali
 
-            .graph
+            .graph.dati-pcn
                 h4.graph__title Andamento termine malattia
                 .graph__container
                     #incrementaliTerminaliLegend
                     canvas#incrementaliTerminali
 
-            .graph.graph--doughnut
+            .graph.graph--doughnut.dati-pcn
                 h4.graph__title Tasso ospedalizzazione
                 .graph__container.flex.flex-column
                     #tassoOspedalizzazioneLegend(style="min-width: 125px;")
                     canvas#tassoOspedalizzazione
+
+            .graph.dati-iss
+                h4.graph__title Decessi per fasce d'età
+                .graph__container
+                    #etaDescessiLegend
+                    canvas#etaDescessi
+
+            .graph.dati-iss
+                h4.graph__title Decessi per genere
+                .graph__container
+                    #genereDescessiLegend
+                    canvas#genereDescessi
 
         section#tabellaRegioni
             h4.graph__title Dati regionali

@@ -3,10 +3,12 @@
         this.urlNazionale = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale.json';
         this.urlProvince = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province.json';
         this.urlRegioni = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json';
+        this.urlIss = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json';
         this.dati = {
             incrementali: {
                 nazione: [],
                 regioni: [],
+                iss: [],
             },
             giornalieri: {
                 nazione: [],
@@ -40,6 +42,7 @@
             this.getColors();
             this.updateDatiNazione();
             this.updateDatiRegioni();
+            this.updateDatiIss();
         }
         catch (e) {
             console.error('Errore: ', e);
@@ -95,6 +98,18 @@
      * Get the national data from the API, then calls the functions
      * @todo: maybe create a callback function or something better to handle the post data received tasks
      */
+    DatiProtezioneCivile.prototype.updateDatiIss = function () {
+        XHR.createAndSend('GET', this.urlIss, json => {
+            this.dati.incrementali.iss = JSON.parse(json.response);
+            this.renderDecessiEta();
+            this.renderDecessiGenere();
+        });
+    };
+
+    /**
+     * Get the national data from the API, then calls the functions
+     * @todo: maybe create a callback function or something better to handle the post data received tasks
+     */
     DatiProtezioneCivile.prototype.updateDatiRegioni = function () {
         XHR.createAndSend('GET', this.urlRegioni, json => {
             this.dati.incrementali.regioni = JSON.parse(json.response);
@@ -138,6 +153,21 @@
         data.forEach(e => {
             labels.push(moment(e.data).format('DD MMM'));
             values.push(e[field]);
+        });
+        return { l: labels, v: values };
+    };
+
+    /**
+     * Takes the raw data and format it for the ChartJS datasets
+     * @param data: {Object} - the data object
+     * @returns {{v: [], l: []}} - an object with the values (v) and labels (l)
+     */
+    DatiProtezioneCivile.prototype.formatDataEta = function (data) {
+        let labels = [];
+        let values = [];
+        data.forEach(e => {
+            labels.push(e.label);
+            values.push(e.deceduti);
         });
         return { l: labels, v: values };
     };
@@ -356,7 +386,7 @@
      */
     DatiProtezioneCivile.prototype.renderGiornalieri = function (id) {
         const containerId = id || 'giornalieriNazionali';
-        const positivi = this.formatData(this.dati.giornalieri.nazione, 'totale_attualmente_positivi');
+        const positivi = this.formatData(this.dati.giornalieri.nazione, 'totale_casi');
         const deceduti = this.formatData(this.dati.giornalieri.nazione, 'deceduti');
         const guariti = this.formatData(this.dati.giornalieri.nazione, 'dimessi_guariti');
         const datasets = [
@@ -373,7 +403,7 @@
             {
                 backgroundColor: this.colors.positivi,
                 data: positivi.v,
-                label: 'Attualmente positivi',
+                label: 'Nuovi positivi',
             },
         ];
         
@@ -506,6 +536,151 @@
                     'Terapia intensiva',
                     'Ricoverati con sintomi',
                     'Isolamento domiciliare',
+                ],
+                datasets: datasets,
+            },
+            options: {
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            var dataset = data.datasets[tooltipItem.datasetIndex];
+                            var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+                            var total = meta.total;
+                            var currentValue = dataset.data[tooltipItem.index];
+                            var percentage = parseFloat((currentValue/total*100).toFixed(1));
+                            return currentValue + ' (' + percentage + '%)';
+                        },
+                        title: function(tooltipItem, data) {
+                            return data.labels[tooltipItem[0].index];
+                        }
+                    },
+                    custom: function ( tooltip ) {
+                        // Tooltip Element
+                        var tooltipEl = document.getElementById('chartjs-tooltip');
+
+                        if ( !tooltipEl ) {
+                            tooltipEl = document.createElement('div');
+                            tooltipEl.id = 'chartjs-tooltip';
+                            tooltipEl.classList.add('chartjs-tooltip');
+                            tooltipEl.innerHTML = '<div id="chartjs-tooltip__table" class="flex flex-column"></div>';
+                            this._chart.canvas.parentNode.appendChild(tooltipEl);
+                        }
+
+                        // Hide if no tooltip
+                        if ( tooltip.opacity === 0 ) {
+                            tooltipEl.style.opacity = 0;
+                            return;
+                        }
+
+                        // Set caret Position
+                        tooltipEl.classList.remove('above', 'below', 'no-transform');
+                        if ( tooltip.yAlign ) {
+                            tooltipEl.classList.add(tooltip.yAlign);
+                        } else {
+                            tooltipEl.classList.add('no-transform');
+                        }
+
+                        function getBody( bodyItem ) {
+                            return bodyItem.lines;
+                        }
+
+                        // Set Text
+                        if ( tooltip.body ) {
+                            var titleLines = tooltip.title || [];
+                            var bodyLines = tooltip.body.map(getBody);
+
+                            var innerHtml = '<div class="flex flex-row">';
+
+                            titleLines.forEach(function ( title ) {
+                                innerHtml += '<h4 class="chartjs-tooltip__title">' + title + '</h4>';
+                            });
+                            innerHtml += '</div><div class="flex flex-column">';
+
+                            bodyLines.forEach(function ( body, i ) {
+                                var colors = tooltip.labelColors[ i ];
+                                var style = 'background:' + colors.backgroundColor;
+                                var span = '<span class="chartjs-tooltip__color" style="' + style + '"></span>';
+                                innerHtml += '<div class="chartjs-tooltip__item">' + span + '<span>' + body + '</span></div>';
+                            });
+                            innerHtml += '</div>';
+
+                            var tableRoot = document.getElementById('chartjs-tooltip__table');
+                            tableRoot.innerHTML = innerHtml;
+                        }
+
+                        var positionY = this._chart.canvas.offsetTop;
+                        var positionX = this._chart.canvas.offsetLeft;
+
+                        // Display, position, and set styles for font
+                        tooltipEl.style.opacity = 1;
+                        tooltipEl.style.left = positionX + tooltip.caretX + 'px';
+                        tooltipEl.style.top = positionY + tooltip.caretY + 'px';
+                    },
+                    enabled: false,
+                },
+                legend: {
+                    display: false,
+                },
+            },
+        });
+        const myLegendContainer = document.getElementById(containerId + 'Legend');
+        myLegendContainer.innerHTML = DatiProtezioneCivile.generateLegend(myChart);
+        DatiProtezioneCivile.bindLegendItem(myChart, myLegendContainer)
+    };
+
+    /**
+     * Call the function to render the chart with the daily data
+     * @param id: {String} - container ID
+     */
+    DatiProtezioneCivile.prototype.renderDecessiEta = function (id) {
+        const containerId = id || 'etaDescessi';
+        const eta = this.formatDataEta(this.dati.giornalieri.iss[this.dati.giornalieri.iss.length - 1]);
+        const datasets = [
+            {
+                backgroundColor: this.colors.deceduti,
+                data: eta.v,
+                label: 'Numero deceduti',
+            },
+        ];
+
+        this.renderBarChart(containerId, datasets, eta.l);
+    };
+
+    /**
+     * Call the function to render the chart with the gender data for the deaths
+     * @param id: {String} - container ID
+     * @todo: Move the doughnut chart generator function
+     */
+    DatiProtezioneCivile.prototype.renderDecessiGenere = function (id) {
+        const containerId = id || 'genereDescessi';
+        const ctx = document.getElementById(containerId).getContext('2d');
+
+        const genere = this.formatData(this.dati.incrementali.iss, 'genere');
+
+        const datasets = [
+            {
+                backgroundColor: [
+                    this.colors.isolamento,
+                    this.colors.deceduti,
+                ],
+                borderColor: [
+                    this.colors.isolamento,
+                    this.colors.deceduti,
+                ],
+                borderAlign: 'inner',
+                borderWidth: 3,
+                hoverBorderWidth: 999,
+                hoverBorderColor: 'rgba(0,0,0,.25)',
+                data: genere,
+            },
+        ];
+
+        const myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    'Maschi',
+                    'Femmine',
                 ],
                 datasets: datasets,
             },

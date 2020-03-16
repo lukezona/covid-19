@@ -1065,7 +1065,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
      */
     DatiProtezioneCivile.prototype.renderGiornalieri = function (id) {
         const containerId = id || 'giornalieriNazionali';
-        const positivi = this.formatData(this.dati.giornalieri.nazione, 'totale_attualmente_positivi');
+        const positivi = this.formatData(this.dati.giornalieri.nazione, 'totale_casi');
         const deceduti = this.formatData(this.dati.giornalieri.nazione, 'deceduti');
         const guariti = this.formatData(this.dati.giornalieri.nazione, 'dimessi_guariti');
         const datasets = [
@@ -1082,7 +1082,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
             {
                 backgroundColor: this.colors.positivi,
                 data: positivi.v,
-                label: 'Attualmente positivi',
+                label: 'Nuovi positivi',
             },
         ];
         
