@@ -11,27 +11,29 @@ mixin footer()
               div: a(href='https://opendatadpc.maps.arcgis.com/apps/opsdashboard/index.html#/b0c68bce2cce478eaac82fe38d4138b1') Mappa Protezione Civile
               div: a(href='http://www.salute.gov.it/nuovocoronavirus') Ministero della Salute
               div: a(href='https://www.iss.it/coronavirus') Istituto Superiore di Sanità
-              div: a(href='http://www.governo.it/') Governo
+              div: a(href='http://www.governo.it/it/approfondimento/coronavirus/13968') Misure governative
+              div: a(href='http://www.governo.it/it/faq-iorestoacasa') FAQ #iorestoacasa
 
             li.main-footer__nav-item
               h4 Dettagli tecnici
-              div: a(href='https://github.com/pcm-dpc/COVID-19') Dati Protezione Civile
-              div: a(href='https://www.epicentro.iss.it/coronavirus/sars-cov-2-sorveglianza-dati') Dati Istituto Superiore Sanità
+              div: a.info-dati.dati-pcn(href='https://github.com/pcm-dpc/COVID-19') Dati Protezione Civile
+              div: a.info-dati.dati-iss(href='https://www.epicentro.iss.it/coronavirus/sars-cov-2-sorveglianza-dati') Dati Istituto Superiore Sanità
               div: a(href='https://github.com/lukezona/covid-19') Codice del progetto
 
       .main-footer__colophon-nav
-        div: span I dati utilizzati sono aggiornati automaticamente tramite i servizi forniti dalla Protezione Civile ogni giorno intorno alle 18:30, dopo la conferenza stampa
+        div: span 1: I dati utilizzati sono aggiornati automaticamente tramite i servizi forniti dalla Protezione Civile ogni giorno intorno alle 18:30, dopo la conferenza stampa
+        div: span 2: I dati utilizzati sono aggiornati manualmente ottenendoli dalla infografica fornita dal ISS (non sempre quotidianamente); i dati sono più vecchi di quelli forniti dalla Protezione Civile.
         div: span I dati sono forniti in licenza CC-BY-4.0
 
       .main-footer__colophon
         .main-footer__colophon-nav
           span &copy; Luca Zonarelli
-          a(href="#") Cookie
-          a(href="#") Privacy
-          a(href="#") Credits
+          a(href="/cookie") Cookie
+          a(href="/privacy") Privacy
+          a(href="/credits") Credits
 
         .main-footer__socials
-          a(href="#")
+          a(href="https://www.github.com/lukezona/covid-19")
             svg.icon(viewBox="0 0 16 16")
               title Get the code on Github
               g: path(d="M8,0.2c-4.4,0-8,3.6-8,8c0,3.5,2.3,6.5,5.5,7.6 C5.9,15.9,6,15.6,6,15.4c0-0.2,0-0.7,0-1.4C3.8,14.5,3.3,13,3.3,13c-0.4-0.9-0.9-1.2-0.9-1.2c-0.7-0.5,0.1-0.5,0.1-0.5 c0.8,0.1,1.2,0.8,1.2,0.8C4.4,13.4,5.6,13,6,12.8c0.1-0.5,0.3-0.9,0.5-1.1c-1.8-0.2-3.6-0.9-3.6-4c0-0.9,0.3-1.6,0.8-2.1 c-0.1-0.2-0.4-1,0.1-2.1c0,0,0.7-0.2,2.2,0.8c0.6-0.2,1.3-0.3,2-0.3c0.7,0,1.4,0.1,2,0.3c1.5-1,2.2-0.8,2.2-0.8 c0.4,1.1,0.2,1.9,0.1,2.1c0.5,0.6,0.8,1.3,0.8,2.1c0,3.1-1.9,3.7-3.7,3.9C9.7,12,10,12.5,10,13.2c0,1.1,0,1.9,0,2.2 c0,0.2,0.1,0.5,0.6,0.4c3.2-1.1,5.5-4.1,5.5-7.6C16,3.8,12.4,0.2,8,0.2z")

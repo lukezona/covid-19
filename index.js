@@ -4,6 +4,14 @@ const app = express();
 app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, 'public')));
 
+const legal = {
+  nomeAzienda: '"Situazione italiana aggiornata COVID19 by Luca Zonarelli"',
+  nome: '"Situazione COVID19"',
+  url: 'covid19.lucazonarelli.com',
+  titolare: "Luca Zonarelli",
+  email: "privacy@lucazonarelli.com",
+};
+
 app.get('/', function (req, res) {
   const regioni = [
     {
@@ -386,6 +394,18 @@ app.get('/', function (req, res) {
     }
   ];
   res.render('pages/index', { regioni: regioni });
+});
+
+app.get('/credits', function (req, res) {
+  res.render('pages/legal/credits');
+});
+
+app.get('/privacy', function (req, res) {
+  res.render('pages/legal/privacy', legal);
+});
+
+app.get('/cookie', function (req, res) {
+  res.render('pages/legal/cookie', legal);
 });
 
 const server = app.listen(8081, function () {

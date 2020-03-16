@@ -1,8 +1,43 @@
 body {
   background-color: var(--color-black);
   color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
 }
 
 h1,h2,h3,h4,h5,h6 {
   color: var(--color-white);
+}
+
+.info-dati {
+  position: relative;
+
+  &:after {
+    content: none;
+    position: absolute;
+    font-size: 11px;
+    margin: 5px 0 0 5px;
+    opacity: .85;
+  }
+}
+
+.dati-pcn {
+
+  &:after {
+    content: '1';
+  }
+
+}
+
+.dati-iss {
+
+  &:after {
+    content: '2';
+  }
+
 }

@@ -102,7 +102,7 @@
         XHR.createAndSend('GET', this.urlIss, json => {
             this.dati.incrementali.iss = JSON.parse(json.response);
             this.renderDecessiEta();
-            this.renderDecessiGenere();
+            this.renderLetalitaEta();
         });
     };
 
@@ -162,12 +162,14 @@
      * @param data: {Object} - the data object
      * @returns {{v: [], l: []}} - an object with the values (v) and labels (l)
      */
-    DatiProtezioneCivile.prototype.formatDataEta = function (data) {
+    DatiProtezioneCivile.prototype.formatDataEta = function (data, field) {
         let labels = [];
         let values = [];
         data.forEach(e => {
-            labels.push(e.label);
-            values.push(e.deceduti);
+            if ( e.label !== 'Totali') {
+                labels.push(e.label);
+                values.push(e[field]);
+            }
         });
         return { l: labels, v: values };
     };
@@ -634,12 +636,30 @@
      */
     DatiProtezioneCivile.prototype.renderDecessiEta = function (id) {
         const containerId = id || 'etaDescessi';
-        const eta = this.formatDataEta(this.dati.giornalieri.iss[this.dati.giornalieri.iss.length - 1]);
+        const eta = this.formatDataEta(this.dati.incrementali.iss[this.dati.incrementali.iss.length - 1].fasce, 'deceduti');
         const datasets = [
             {
                 backgroundColor: this.colors.deceduti,
                 data: eta.v,
-                label: 'Numero deceduti',
+                label: 'Decessi',
+            },
+        ];
+
+        this.renderBarChart(containerId, datasets, eta.l);
+    };
+
+    /**
+     * Call the function to render the chart with the daily data
+     * @param id: {String} - container ID
+     */
+    DatiProtezioneCivile.prototype.renderLetalitaEta = function (id) {
+        const containerId = id || 'etaLetalita';
+        const eta = this.formatDataEta(this.dati.incrementali.iss[this.dati.incrementali.iss.length - 1].fasce, 'letalita');
+        const datasets = [
+            {
+                backgroundColor: this.colors.rianimazione,
+                data: eta.v,
+                label: 'Letalità (%)',
             },
         ];
 
