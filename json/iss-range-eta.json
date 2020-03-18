@@ -172,5 +172,92 @@
         "percentuale": "40.2"
       }
     ]
+  },
+  {
+    "data": "2020-03-17 19:00:00",
+    "fasce": [
+      {
+        "label": "0-9",
+        "deceduti": "0",
+        "deceduti_perc": "0",
+        "letalita": "0"
+      },
+      {
+        "label": "10-19",
+        "deceduti": "0",
+        "deceduti_perc": "0",
+        "letalita": "0"
+      },
+      {
+        "label": "20-29",
+        "deceduti": "0",
+        "deceduti_perc": "0",
+        "letalita": "0"
+      },
+      {
+        "label": "30-39",
+        "deceduti": "5",
+        "deceduti_perc": "0.2",
+        "letalita": "0.3"
+      },
+      {
+        "label": "40-49",
+        "deceduti": "12",
+        "deceduti_perc": "0.6",
+        "letalita": "0.4"
+      },
+      {
+        "label": "50-59",
+        "deceduti": "56",
+        "deceduti_perc": "2.8",
+        "letalita": "1"
+      },
+      {
+        "label": "60-69",
+        "deceduti": "173",
+        "deceduti_perc": "8.6",
+        "letalita": "3.5"
+      },
+      {
+        "label": "70-79",
+        "deceduti": "708",
+        "deceduti_perc": "35.3",
+        "letalita": "12.3"
+      },
+      {
+        "label": "80-89",
+        "deceduti": "851",
+        "deceduti_perc": "42.5",
+        "letalita": "19.6"
+      },
+      {
+        "label": "> 90",
+        "deceduti": "198",
+        "deceduti_perc": "9.9",
+        "letalita": "22.9"
+      },
+      {
+        "label": "Non noto",
+        "deceduti": "0",
+        "deceduti_perc": "0",
+        "letalita": "0"
+      },
+      {
+        "label": "Totali",
+        "deceduti": "2003",
+        "deceduti_perc": "100",
+        "letalita": "7.1"
+      }
+    ],
+    "genere": [
+      {
+        "label": "Maschi",
+        "percentuale": "59.8"
+      },
+      {
+        "label": "Femmine",
+        "percentuale": "40.2"
+      }
+    ]
   }
 ]
