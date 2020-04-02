@@ -35,7 +35,7 @@ mixin th(label, sort)
 mixin tr(item)
   tr.int-table__row(data-regione=item.codice_regione)
     td.int-table__cell(data-field='denominazione_regione')!= item.denominazione_regione
-    td.int-table__cell(data-field='totale_attualmente_positivi')!= item.totale_attualmente_positivi
+    td.int-table__cell(data-field='totale_positivi')!= item.totale_positivi
     td.int-table__cell(data-field='ricoverati_con_sintomi')!= item.ricoverati_con_sintomi
     td.int-table__cell(data-field='terapia_intensiva')= item.terapia_intensiva
     td.int-table__cell(data-field='deceduti')!= item.deceduti

@@ -78,8 +78,9 @@
                 this.dati.giornalieri.nazione[i].terapia_intensiva = el.terapia_intensiva - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].terapia_intensiva : 0);
                 this.dati.giornalieri.nazione[i].totale_ospedalizzati = el.totale_ospedalizzati - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].totale_ospedalizzati : 0);
                 this.dati.giornalieri.nazione[i].isolamento_domiciliare = el.isolamento_domiciliare - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].isolamento_domiciliare : 0);
-                this.dati.giornalieri.nazione[i].totale_attualmente_positivi = el.totale_attualmente_positivi - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].totale_attualmente_positivi : 0);
-                this.dati.giornalieri.nazione[i].nuovi_attualmente_positivi = el.nuovi_attualmente_positivi - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].nuovi_attualmente_positivi : 0);
+                this.dati.giornalieri.nazione[i].totale_positivi = el.totale_positivi - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].totale_positivi : 0);
+                this.dati.giornalieri.nazione[i].variazione_totale_positivi = el.variazione_totale_positivi - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].variazione_totale_positivi : 0);
+                this.dati.giornalieri.nazione[i].nuovi_positivi = el.nuovi_positivi - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].nuovi_positivi : 0);
                 this.dati.giornalieri.nazione[i].dimessi_guariti = el.dimessi_guariti - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].dimessi_guariti : 0);
                 this.dati.giornalieri.nazione[i].deceduti = el.deceduti - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].deceduti : 0);
                 this.dati.giornalieri.nazione[i].totale_casi = el.totale_casi - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].totale_casi : 0);
@@ -135,7 +136,7 @@
         const guariti = document.getElementById('totaleGuariti');
 
         totale.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['totale_casi'];
-        attuali.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['totale_attualmente_positivi'];
+        attuali.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['totale_positivi'];
         deceduti.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['deceduti'];
         guariti.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['dimessi_guariti'];
 
@@ -420,9 +421,11 @@
         const containerId = id || 'incrementaliNazionali';
 
         const totali = this.formatData(this.dati.incrementali.nazione, 'totale_casi');
-        const positivi = this.formatData(this.dati.incrementali.nazione, 'totale_attualmente_positivi');
+        const positivi = this.formatData(this.dati.incrementali.nazione, 'totale_positivi');
         const deceduti = this.formatData(this.dati.incrementali.nazione, 'deceduti');
         const guariti = this.formatData(this.dati.incrementali.nazione, 'dimessi_guariti');
+
+        console.log('Positivi: ', positivi);
 
         const datasets = [
             Tools.mergeObject(this.datasetOptions, {
