@@ -3,7 +3,6 @@ const path = require('path');
 const app = express();
 const helmet = require('helmet');
 app.set('view engine', 'pug');
-app.use(helmet());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const legal = {
