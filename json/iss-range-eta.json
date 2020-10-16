@@ -346,5 +346,104 @@
         "percentuale": "41.4"
       }
     ]
+  },
+  {
+    "data": "2020-10-06 19:00:00",
+    "fasce": [
+      {
+        "label": "0-9",
+        "casi": "6924",
+        "deceduti": "4",
+        "deceduti_perc": "0",
+        "letalita": "0.1"
+      },
+      {
+        "label": "10-19",
+        "casi": "13209",
+        "deceduti": "0",
+        "deceduti_perc": "0",
+        "letalita": "0"
+      },
+      {
+        "label": "20-29",
+        "casi": "31734",
+        "deceduti": "15",
+        "deceduti_perc": "0",
+        "letalita": "0"
+      },
+      {
+        "label": "30-39",
+        "casi": "32384",
+        "deceduti": "70",
+        "deceduti_perc": "0.2",
+        "letalita": "0.2"
+      },
+      {
+        "label": "40-49",
+        "casi": "44161",
+        "deceduti": "319",
+        "deceduti_perc": "0.9",
+        "letalita": "0.7"
+      },
+      {
+        "label": "50-59",
+        "casi": "55978",
+        "deceduti": "1263",
+        "deceduti_perc": "3.5",
+        "letalita": "2.3"
+      },
+      {
+        "label": "60-69",
+        "casi": "39429",
+        "deceduti": "3613",
+        "deceduti_perc": "10.0",
+        "letalita": "9.2"
+      },
+      {
+        "label": "70-79",
+        "casi": "38786",
+        "deceduti": "9409",
+        "deceduti_perc": "26.1",
+        "letalita": "24.3"
+      },
+      {
+        "label": "80-89",
+        "casi": "44593",
+        "deceduti": "14736",
+        "deceduti_perc": "40.9",
+        "letalita": "33.0"
+      },
+      {
+        "label": "> 90",
+        "casi": "20156",
+        "deceduti": "6621",
+        "deceduti_perc": "18.4",
+        "letalita": "32.8"
+      },
+      {
+        "label": "Non noto",
+        "casi": "22",
+        "deceduti": "1",
+        "deceduti_perc": "0",
+        "letalita": "4.5"
+      },
+      {
+        "label": "Totali",
+        "casi": "327376",
+        "deceduti": "36051",
+        "deceduti_perc": "100",
+        "letalita": "11"
+      }
+    ],
+    "genere": [
+      {
+        "label": "Maschi",
+        "percentuale": "52.4"
+      },
+      {
+        "label": "Femmine",
+        "percentuale": "47.6"
+      }
+    ]
   }
 ]
