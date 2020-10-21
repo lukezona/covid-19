@@ -2,9 +2,25 @@ extends ../layouts/default
 include ../components/table
 
 block content
-    .container.max-width-md
+    .container.max-width-xl
 
         section.recap-cards
+            .card.card--positivi
+                .card__title Attualmente positivi
+                span.card__value#attualiContagiati -
+            .card.card--ospedalizzati
+                .card__title Ospedalizzati
+                span.card__value#attualiRicoveratiSintomatici -
+                .card__info escluse terapie intensive
+            .card.card--rianimazione
+                .card__title Terapia intensiva
+                span.card__value#attualiRianimazione -
+            .card.card--deceduti
+                .card__title Deceduti
+                span.card__value#totaleDeceduti -
+                .card__info in attesa di conferma ISS
+
+        //section.recap-cards
             .card.card--totali
                 .card__title Totale contagiati
                 span.card__value#totaleContagiati -
@@ -35,16 +51,16 @@ block content
                     canvas#giornalieriNazionali
 
             .graph
-                h4.info-dati.dati-pcn Andamento termine malattia
+                h4.info-dati.dati-pcn Andamento tamponi
                 .graph__container
-                    #incrementaliTerminaliLegend
-                    canvas#incrementaliTerminali
+                    #incrementaliTamponiLegend
+                    canvas#incrementaliTamponi
 
             .graph.graph--doughnut
-                h4.info-dati.dati-pcn Tasso ospedalizzazione
-                .graph__container.flex.flex-column
-                    #tassoOspedalizzazioneLegend(style="min-width: 125px;")
-                    canvas#tassoOspedalizzazione
+                h4.info-dati.dati-pcn Carico terapie intensive
+                .graph__container
+                    #caricoTerapieIntensiveLegend
+                    canvas#caricoTerapieIntensive
 
             .graph
                 h4.info-dati.dati-iss Decessi per fasce d'età

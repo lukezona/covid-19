@@ -58,6 +58,14 @@
     --card-color: var(--color-guariti);
   }
 
+  &--rianimazione {
+    --card-color: var(--color-rianimazione);
+  }
+
+  &--ospedalizzati {
+    --card-color: var(--color-ricoverati);
+  }
+
   &--alert {
     background-color: alpha(var(--color-positivi), .5);
     margin-top: var(--space-xs);

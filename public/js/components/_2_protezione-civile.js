@@ -4,6 +4,7 @@
         this.urlProvince = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province.json';
         this.urlRegioni = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json';
         this.urlIss = 'https://raw.githubusercontent.com/lukezona/covid-19/master/json/iss-range-eta.json';
+        this.urlTerapieIntensive = 'https://raw.githubusercontent.com/lukezona/covid-19/master/json/capienza-terapie-intensive.json';
         this.dati = {
             incrementali: {
                 nazione: [],
@@ -13,6 +14,11 @@
             giornalieri: {
                 nazione: [],
             },
+            variazioni: {
+                icu: [],
+                ricoverati_con_sintomi: [],
+            },
+            capienza_terapie_intensive: {}
         };
         this.datasetOptions = {
             fill: false,
@@ -43,6 +49,7 @@
             this.updateDatiNazione();
             this.updateDatiRegioni();
             this.updateDatiIss();
+            this.updateDatiTerapieIntensive();
         }
         catch (e) {
             console.error('Errore: ', e);
@@ -84,14 +91,29 @@
                 this.dati.giornalieri.nazione[i].dimessi_guariti = el.dimessi_guariti - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].dimessi_guariti : 0);
                 this.dati.giornalieri.nazione[i].deceduti = el.deceduti - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].deceduti : 0);
                 this.dati.giornalieri.nazione[i].totale_casi = el.totale_casi - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].totale_casi : 0);
+                this.dati.giornalieri.nazione[i].casi_testati = el.casi_testati - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].casi_testati : 0);
+                this.dati.giornalieri.nazione[i].casi_testati = this.dati.giornalieri.nazione[i].casi_testati > 900000 ? 0 : this.dati.giornalieri.nazione[i].casi_testati;
                 this.dati.giornalieri.nazione[i].tamponi = el.tamponi - (this.dati.incrementali.nazione[i - 1] ? this.dati.incrementali.nazione[i - 1].tamponi : 0);
+                this.dati.giornalieri.nazione[i].perc_positivi_su_tamponi = (this.dati.giornalieri.nazione[i].totale_casi / this.dati.giornalieri.nazione[i].tamponi * 100).toFixed(1);
+                this.dati.giornalieri.nazione[i].perc_positivi_su_casi_testati = this.dati.giornalieri.nazione[i].casi_testati > 0 ? (this.dati.giornalieri.nazione[i].totale_casi / this.dati.giornalieri.nazione[i].casi_testati * 100).toFixed(1) : 0;
             });
 
             this.updateCards();
             this.renderIncrementali();
-            this.renderIncrementaliTermine();
+            this.renderIncrementaliTamponi();
             this.renderGiornalieri();
             this.renderTassoOspedalizzazione();
+        });
+    };
+    
+    /**
+     * Get the regional data from the API, then calls the functions
+     * @todo: maybe create a callback function or something better to handle the post data received tasks
+     */
+    DatiProtezioneCivile.prototype.updateDatiTerapieIntensive = function () {
+        XHR.createAndSend('GET', this.urlTerapieIntensive, json => {
+            this.dati.incrementali.capienza_terapie_intensive = JSON.parse(json.response);
+            this.renderCaricoTerapiaIntensiva();
         });
     };
 
@@ -113,7 +135,7 @@
      */
     DatiProtezioneCivile.prototype.updateDatiRegioni = function () {
         XHR.createAndSend('GET', this.urlRegioni, json => {
-            this.dati.incrementali.regioni = JSON.parse(json.response);
+            this.dati.capienza_terapie_intensive = JSON.parse(json.response);
             this.updateTableData();
         });
     };
@@ -134,11 +156,17 @@
         const attuali = document.getElementById('attualiContagiati');
         const deceduti = document.getElementById('totaleDeceduti');
         const guariti = document.getElementById('totaleGuariti');
+        const rianimazione = document.getElementById('attualiRianimazione');
+        const ospedalizzati = document.getElementById('attualiOspedalizzati');
+        const ricoverati_con_sintomi = document.getElementById('attualiRicoveratiSintomatici');
 
-        totale.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['totale_casi'];
+
+        // totale.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['totale_casi'];
         attuali.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['totale_positivi'];
         deceduti.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['deceduti'];
-        guariti.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['dimessi_guariti'];
+        // guariti.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['dimessi_guariti'];
+        rianimazione.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['terapia_intensiva'];
+        ricoverati_con_sintomi.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['ricoverati_con_sintomi'];
 
     };
 
@@ -148,12 +176,14 @@
      * @param field - the field key
      * @returns {{v: [], l: []}} - an object with the values (v) and labels (l)
      */
-    DatiProtezioneCivile.prototype.formatData = function (data, field) {
+    DatiProtezioneCivile.prototype.formatData = function (data, value_field, label_field) {
         let labels = [];
         let values = [];
+        const label = label_field ? label_field : 'data';
         data.forEach(e => {
-            labels.push(moment(e.data).format('DD MMM'));
-            values.push(e[field]);
+            let l = label === 'data' ? moment(e[label]).format('DD MMM') : label;
+            labels.push(l);
+            values.push(e[value_field]);
         });
         return { l: labels, v: values };
     };
@@ -180,8 +210,21 @@
      * @param id: {String} - canvas ID
      * @param datasets: {Object} - array of dataset objects
      */
-    DatiProtezioneCivile.prototype.renderBarChart = function (id, datasets, labels) {
+    DatiProtezioneCivile.prototype.renderBarChart = function (id, datasets, labels, scales) {
         const ctx = document.getElementById(id).getContext('2d');
+        const default_scales = {
+            xAxes: [{
+                ticks: {
+                    fontFamily: 'Roboto Condensed',
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    fontFamily: 'Roboto Condensed',
+                }
+            }],
+        };
         const myChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -256,22 +299,9 @@
                         tooltipEl.style.top = positionY + tooltip.caretY + 'px';
                     },
                     enabled: false,
-                    mode: 'x',
-                    position: 'nearest',
+                    mode: 'index',
                 },
-                scales: {
-                    xAxes: [{
-                        ticks: {
-                            fontFamily: 'Roboto Condensed',
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            fontFamily: 'Roboto Condensed',
-                        }
-                    }]
-                }
+                scales: scales || default_scales,
             },
         });
         const myLegendContainer = document.getElementById(id + 'Legend');
@@ -284,8 +314,21 @@
      * @param id: {String} - canvas ID
      * @param datasets: {Object} - array of dataset objects
      */
-    DatiProtezioneCivile.prototype.renderLineChart = function (id, datasets, labels) {
+    DatiProtezioneCivile.prototype.renderLineChart = function (id, datasets, labels, scales) {
         const ctx = document.getElementById(id).getContext('2d');
+        const default_scales = {
+            xAxes: [{
+                ticks: {
+                    fontFamily: 'Roboto Condensed',
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    fontFamily: 'Roboto Condensed',
+                }
+            }],
+        };
         const myChart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -300,7 +343,7 @@
                     custom: function ( tooltip ) {
                         // Tooltip Element
                         var tooltipEl = document.getElementById('chartjs-tooltip');
-
+    
                         if ( !tooltipEl ) {
                             tooltipEl = document.createElement('div');
                             tooltipEl.id = 'chartjs-tooltip';
@@ -308,13 +351,13 @@
                             tooltipEl.innerHTML = '<div id="chartjs-tooltip__table" class="flex flex-column"></div>';
                             this._chart.canvas.parentNode.appendChild(tooltipEl);
                         }
-
+    
                         // Hide if no tooltip
                         if ( tooltip.opacity === 0 ) {
                             tooltipEl.style.opacity = 0;
                             return;
                         }
-
+    
                         // Set caret Position
                         tooltipEl.classList.remove('above', 'below', 'no-transform');
                         if ( tooltip.yAlign ) {
@@ -322,23 +365,23 @@
                         } else {
                             tooltipEl.classList.add('no-transform');
                         }
-
+    
                         function getBody( bodyItem ) {
                             return bodyItem.lines;
                         }
-
+    
                         // Set Text
                         if ( tooltip.body ) {
                             var titleLines = tooltip.title || [];
                             var bodyLines = tooltip.body.map(getBody);
-
+    
                             var innerHtml = '<div class="flex flex-row">';
-
+    
                             titleLines.forEach(function ( title ) {
                                 innerHtml += '<h4 class="chartjs-tooltip__title">' + title + '</h4>';
                             });
                             innerHtml += '</div><div class="flex flex-column">';
-
+    
                             bodyLines.forEach(function ( body, i ) {
                                 var colors = tooltip.labelColors[ i ];
                                 var style = 'background:' + colors.backgroundColor;
@@ -346,36 +389,23 @@
                                 innerHtml += '<div class="chartjs-tooltip__item">' + span + '<span>' + body + '</span></div>';
                             });
                             innerHtml += '</div>';
-
+    
                             var tableRoot = document.getElementById('chartjs-tooltip__table');
                             tableRoot.innerHTML = innerHtml;
                         }
-
+    
                         var positionY = this._chart.canvas.offsetTop;
                         var positionX = this._chart.canvas.offsetLeft;
-
+    
                         // Display, position, and set styles for font
                         tooltipEl.style.opacity = 1;
                         tooltipEl.style.left = positionX + tooltip.caretX + 'px';
                         tooltipEl.style.top = positionY + tooltip.caretY + 'px';
                     },
                     enabled: false,
-                    mode: 'x',
-                    position: 'nearest',
+                    mode: 'index',
                 },
-                scales: {
-                    xAxes: [{
-                        ticks: {
-                            fontFamily: 'Roboto Condensed',
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            fontFamily: 'Roboto Condensed',
-                        }
-                    }]
-                }
+                scales: scales || default_scales,
             },
         });
         const myLegendContainer = document.getElementById(id + 'Legend');
@@ -392,11 +422,18 @@
         const positivi = this.formatData(this.dati.giornalieri.nazione, 'totale_casi');
         const deceduti = this.formatData(this.dati.giornalieri.nazione, 'deceduti');
         const guariti = this.formatData(this.dati.giornalieri.nazione, 'dimessi_guariti');
+        const terapia_intensiva = this.formatData(this.dati.giornalieri.nazione, 'terapia_intensiva');
+        const ricoverati_con_sintomi = this.formatData(this.dati.giornalieri.nazione, 'ricoverati_con_sintomi');
         const datasets = [
             {
-                backgroundColor: this.colors.guariti,
-                data: guariti.v,
-                label: 'Guariti',
+                backgroundColor: this.colors.ricoverati,
+                data: ricoverati_con_sintomi.v,
+                label: 'Ricoverati con sintomi',
+            },
+            {
+                backgroundColor: this.colors.rianimazione,
+                data: terapia_intensiva.v,
+                label: 'Terapia intensiva',
             },
             {
                 backgroundColor: this.colors.deceduti,
@@ -424,16 +461,30 @@
         const positivi = this.formatData(this.dati.incrementali.nazione, 'totale_positivi');
         const deceduti = this.formatData(this.dati.incrementali.nazione, 'deceduti');
         const guariti = this.formatData(this.dati.incrementali.nazione, 'dimessi_guariti');
-
-        console.log('Positivi: ', positivi);
+        const ricoverati_con_sintomi = this.formatData(this.dati.incrementali.nazione, 'ricoverati_con_sintomi');
+        const terapia_intensiva = this.formatData(this.dati.incrementali.nazione, 'terapia_intensiva');
 
         const datasets = [
             Tools.mergeObject(this.datasetOptions, {
-                label: 'Guariti',
-                data: guariti.v,
-                hidden: true,
-                borderColor: this.colors.guariti,
-                pointBackgroundColor: this.colors.guariti,
+                label: 'Attualmente positivi',
+                data: positivi.v,
+                hidden: false,
+                borderColor: this.colors.positivi,
+                pointBackgroundColor: this.colors.positivi,
+            }),
+            Tools.mergeObject(this.datasetOptions, {
+                label: 'Ricoverati con sintomi',
+                data: ricoverati_con_sintomi.v,
+                hidden: false,
+                borderColor: this.colors.ricoverati,
+                pointBackgroundColor: this.colors.ricoverati,
+            }),
+            Tools.mergeObject(this.datasetOptions, {
+                label: 'Terapia intensiva',
+                data: terapia_intensiva.v,
+                hidden: false,
+                borderColor: this.colors.rianimazione,
+                pointBackgroundColor: this.colors.rianimazione,
             }),
             Tools.mergeObject(this.datasetOptions, {
                 label: 'Deceduti',
@@ -442,21 +493,84 @@
                 borderColor: this.colors.deceduti,
                 pointBackgroundColor: this.colors.deceduti,
             }),
-            Tools.mergeObject(this.datasetOptions, {
-                label: 'Attualmente positivi',
-                data: positivi.v,
-                borderColor: this.colors.positivi,
-                pointBackgroundColor: this.colors.positivi,
-            }),
-            Tools.mergeObject(this.datasetOptions, {
-                label: 'Totale contagiati',
-                data: totali.v,
-                borderColor: this.colors.totali,
-                pointBackgroundColor: this.colors.totali,
-            }),
         ];
 
         this.renderLineChart(containerId, datasets, positivi.l);
+    };
+
+    /**
+     * Call the function to render the chart with the cumulative data relative to tests
+     * @param id: {String} - container ID
+     */
+    DatiProtezioneCivile.prototype.renderIncrementaliTamponi = function (id) {
+        const containerId = id || 'incrementaliTamponi';
+
+        const tamponi = this.formatData(this.dati.giornalieri.nazione, 'tamponi');
+        const casi_testati = this.formatData(this.dati.giornalieri.nazione, 'casi_testati');
+        const totale_casi = this.formatData(this.dati.giornalieri.nazione, 'totale_casi');
+        const perc_positivi_su_casi_testati = this.formatData(this.dati.giornalieri.nazione, 'perc_positivi_su_casi_testati');
+        const perc_positivi_su_tamponi = this.formatData(this.dati.giornalieri.nazione, 'perc_positivi_su_tamponi');
+
+        const scales = {
+            xAxes: [{
+                ticks: {
+                    fontFamily: 'Roboto Condensed',
+                }
+            }],
+            yAxes: [{
+                id: 'A',
+                type: 'linear',
+                position: 'left',
+                ticks: {
+                    beginAtZero: true,
+                    fontFamily: 'Roboto Condensed',
+                }
+              }, {
+                id: 'B',
+                type: 'linear',
+                position: 'right',
+                ticks: {
+                    beginAtZero: true,
+                    fontFamily: 'Roboto Condensed',
+                }
+              }]
+        };
+
+        const datasets = [
+            Tools.mergeObject(this.datasetOptions, {
+                label: 'Nuovi positivi su casi testati',
+                data: perc_positivi_su_casi_testati.v,
+                borderColor: this.colors.rianimazione,
+                pointBackgroundColor: this.colors.rianimazione,
+            }),
+            Tools.mergeObject(this.datasetOptions, {
+                label: 'Nuovi positivi su tamponi',
+                data: perc_positivi_su_tamponi.v,
+                borderColor: this.colors.positivi,
+                pointBackgroundColor: this.colors.positivi,
+            }),
+        ];
+
+        this.renderLineChart(containerId, datasets, tamponi.l);
+    };
+
+    /**
+     * Call the function to render the chart with the regional pressure on the ICUs
+     * @param id: {String} - container ID
+     */
+    DatiProtezioneCivile.prototype.renderCaricoTerapiaIntensiva = function (id) {
+        const containerId = id || 'caricoTerapieIntensive';
+        const capienza_massima = this.dati.capienza_terapie_intensive.nazionali;
+        const capienza_terapie_intensive = this.formatData(this.dati.capienza_terapie_intensive.regioni, 'capienza', 'denominazione_regione');
+        const datasets = [
+            {
+                backgroundColor: this.colors.positivi,
+                data: capienza_terapie_intensive.v,
+                label: 'Capienza terapie intensive',
+            },
+        ];
+        
+        this.renderBarChart(containerId, datasets, capienza_terapie_intensive.l);
     };
 
     /**
@@ -639,16 +753,22 @@
      */
     DatiProtezioneCivile.prototype.renderDecessiEta = function (id) {
         const containerId = id || 'etaDescessi';
-        const eta = this.formatDataEta(this.dati.incrementali.iss[this.dati.incrementali.iss.length - 1].fasce, 'deceduti');
+        const positivi = this.formatDataEta(this.dati.incrementali.iss[this.dati.incrementali.iss.length - 1].fasce, 'casi');
+        const deceduti = this.formatDataEta(this.dati.incrementali.iss[this.dati.incrementali.iss.length - 1].fasce, 'deceduti');
         const datasets = [
             {
+                backgroundColor: this.colors.positivi,
+                data: positivi.v,
+                label: 'Positivi',
+            },
+            {
                 backgroundColor: this.colors.deceduti,
-                data: eta.v,
+                data: deceduti.v,
                 label: 'Decessi',
             },
         ];
 
-        this.renderBarChart(containerId, datasets, eta.l);
+        this.renderBarChart(containerId, datasets, deceduti.l);
     };
 
     /**
@@ -657,16 +777,16 @@
      */
     DatiProtezioneCivile.prototype.renderLetalitaEta = function (id) {
         const containerId = id || 'etaLetalita';
-        const eta = this.formatDataEta(this.dati.incrementali.iss[this.dati.incrementali.iss.length - 1].fasce, 'letalita');
+        const letalita = this.formatDataEta(this.dati.incrementali.iss[this.dati.incrementali.iss.length - 1].fasce, 'letalita');
         const datasets = [
             {
                 backgroundColor: this.colors.rianimazione,
-                data: eta.v,
+                data: letalita.v,
                 label: 'Letalità (%)',
             },
         ];
 
-        this.renderBarChart(containerId, datasets, eta.l);
+        this.renderBarChart(containerId, datasets, letalita.l);
     };
 
     /**
