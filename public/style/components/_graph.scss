@@ -25,4 +25,13 @@
   @include breakpoint(sm) {
     grid-template-columns: repeat(2, 50%);
   }
+
+  &--single-column {
+    grid-template-columns: repeat(1, 100%);
+  }
+}
+
+.chartjs-render-monitor {
+  height: auto !important;
+  width: 100% !important;
 }

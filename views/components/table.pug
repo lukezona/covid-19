@@ -9,6 +9,8 @@ mixin table(data)
           +th('Terapia intensiva')
           +th('Decessi')
           +th('Guariti')
+          +th('Nuovi positivi')
+          +th('Casi testati')
           +th('Totale tamponi')
 
         tbody.int-table__body.js-int-table__body
@@ -40,6 +42,8 @@ mixin tr(item)
     td.int-table__cell(data-field='terapia_intensiva')= item.terapia_intensiva
     td.int-table__cell(data-field='deceduti')!= item.deceduti
     td.int-table__cell(data-field='dimessi_guariti')!= item.dimessi_guariti
+    td.int-table__cell(data-field='nuovi_positivi')!= item.nuovi_positivi
+    td.int-table__cell(data-field='casi_testati')!= item.casi_testati
     td.int-table__cell(data-field='tamponi')!= item.tamponi
 
 mixin sorting-arrow()

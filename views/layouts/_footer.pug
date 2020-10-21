@@ -1,6 +1,6 @@
 mixin footer()
   footer.main-footer.padding-y-lg
-    .container.max-width-md
+    .container.max-width-xl
       .main-footer__content
         .main-footer__logo
           img(src="/images/covid.svg")
@@ -18,11 +18,13 @@ mixin footer()
               h4 Dettagli tecnici
               div: a.info-dati.dati-pcn(href='https://github.com/pcm-dpc/COVID-19') Dati Protezione Civile
               div: a.info-dati.dati-iss(href='https://www.epicentro.iss.it/coronavirus/sars-cov-2-sorveglianza-dati') Dati Istituto Superiore Sanità
+              div: a.info-dati.dati-qs(href='http://www.quotidianosanita.it/governo-e-parlamento/articolo.php?articolo_id=88770') Elaborazioni Quotidiano Sanità
               div: a(href='https://github.com/lukezona/covid-19') Codice del progetto
 
       .main-footer__colophon-nav
         div: span 1: I dati utilizzati sono aggiornati automaticamente tramite i servizi forniti dalla Protezione Civile ogni giorno intorno alle 18:30, dopo la conferenza stampa
         div: span 2: I dati utilizzati sono aggiornati manualmente ottenendoli dalla infografica fornita dal ISS (non sempre quotidianamente); i dati sono più vecchi di quelli forniti dalla Protezione Civile.
+        div: span 3: I dati relativi alle capienze massime regionali sono ottenuti dall'elaborazione Quotidiano Sanità; dati aggiornati manualmente.
         div: span I dati sono forniti in licenza CC-BY-4.0
 
       .main-footer__colophon

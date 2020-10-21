@@ -712,6 +712,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
         this.urlNazionale = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale.json';
         this.urlProvince = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-province.json';
         this.urlRegioni = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni.json';
+        this.urlRegioniLatest = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni-latest.json';
         this.urlIss = 'https://raw.githubusercontent.com/lukezona/covid-19/master/json/iss-range-eta.json';
         this.urlTerapieIntensive = 'https://raw.githubusercontent.com/lukezona/covid-19/master/json/capienza-terapie-intensive.json';
         this.dati = {
@@ -759,6 +760,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
             this.updateDatiRegioni();
             this.updateDatiIss();
             this.updateDatiTerapieIntensive();
+            this.bindColumnChanger();
         }
         catch (e) {
             console.error('Errore: ', e);
@@ -777,6 +779,17 @@ Math.easeInOutQuad = function (t, b, c, d) {
         this.colors.rianimazione = style.getPropertyValue('--color-rianimazione');
         this.colors.isolamento = style.getPropertyValue('--color-isolamento');
         this.colors.ricoverati = style.getPropertyValue('--color-ricoverati');
+    };
+
+    /**
+     * Get the color values from the CSS variables set in the style files
+     */
+    DatiProtezioneCivile.prototype.bindColumnChanger = function () {
+        document.getElementById('column-changer').addEventListener('click', function() {
+            let graphs = document.querySelector('.graphs');
+            let classe = 'graphs--single-column';
+            Util.toggleClass(graphs, classe, !Util.hasClass(graphs, classe));
+        });
     };
 
     /**
@@ -811,7 +824,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
             this.renderIncrementali();
             this.renderIncrementaliTamponi();
             this.renderGiornalieri();
-            this.renderTassoOspedalizzazione();
+            // this.renderTassoOspedalizzazione();
         });
     };
     
@@ -821,7 +834,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
      */
     DatiProtezioneCivile.prototype.updateDatiTerapieIntensive = function () {
         XHR.createAndSend('GET', this.urlTerapieIntensive, json => {
-            this.dati.incrementali.capienza_terapie_intensive = JSON.parse(json.response);
+            this.dati.capienza_terapie_intensive = JSON.parse(json.response);
             this.renderCaricoTerapiaIntensiva();
         });
     };
@@ -843,8 +856,8 @@ Math.easeInOutQuad = function (t, b, c, d) {
      * @todo: maybe create a callback function or something better to handle the post data received tasks
      */
     DatiProtezioneCivile.prototype.updateDatiRegioni = function () {
-        XHR.createAndSend('GET', this.urlRegioni, json => {
-            this.dati.capienza_terapie_intensive = JSON.parse(json.response);
+        XHR.createAndSend('GET', this.urlRegioniLatest, json => {
+            this.dati.incrementali.regioni = JSON.parse(json.response);
             this.updateTableData();
         });
     };
@@ -868,7 +881,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
         const rianimazione = document.getElementById('attualiRianimazione');
         const ospedalizzati = document.getElementById('attualiOspedalizzati');
         const ricoverati_con_sintomi = document.getElementById('attualiRicoveratiSintomatici');
-
+        const ultimo_aggiornamento = document.getElementById('dataUltimoAggiornamento');
 
         // totale.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['totale_casi'];
         attuali.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['totale_positivi'];
@@ -876,7 +889,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
         // guariti.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['dimessi_guariti'];
         rianimazione.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['terapia_intensiva'];
         ricoverati_con_sintomi.innerText = this.dati.incrementali.nazione[this.dati.incrementali.nazione.length - 1]['ricoverati_con_sintomi'];
-
+        ultimo_aggiornamento.innerText = moment(this.dati.giornalieri.nazione[this.dati.giornalieri.nazione.length - 1].data).format('DD/MM/YYYY HH:mm');
     };
 
     /**
@@ -890,7 +903,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
         let values = [];
         const label = label_field ? label_field : 'data';
         data.forEach(e => {
-            let l = label === 'data' ? moment(e[label]).format('DD MMM') : label;
+            let l = label === 'data' ? moment(e[label]).format('DD MMM') : e[label];
             labels.push(l);
             values.push(e[value_field]);
         });
@@ -919,7 +932,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
      * @param id: {String} - canvas ID
      * @param datasets: {Object} - array of dataset objects
      */
-    DatiProtezioneCivile.prototype.renderBarChart = function (id, datasets, labels, scales) {
+    DatiProtezioneCivile.prototype.renderBarChart = function (id, datasets, labels, scales, percentage) {
         const ctx = document.getElementById(id).getContext('2d');
         const default_scales = {
             xAxes: [{
@@ -991,6 +1004,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
                                 var colors = tooltip.labelColors[ i ];
                                 var style = 'background:' + colors.backgroundColor;
                                 var span = '<span class="chartjs-tooltip__color" style="' + style + '"></span>';
+                                if (percentage) body += '%';
                                 innerHtml += '<div class="chartjs-tooltip__item">' + span + '<span>' + body + '</span></div>';
                             });
                             innerHtml += '</div>';
@@ -1023,7 +1037,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
      * @param id: {String} - canvas ID
      * @param datasets: {Object} - array of dataset objects
      */
-    DatiProtezioneCivile.prototype.renderLineChart = function (id, datasets, labels, scales) {
+    DatiProtezioneCivile.prototype.renderLineChart = function (id, datasets, labels, scales, percentage) {
         const ctx = document.getElementById(id).getContext('2d');
         const default_scales = {
             xAxes: [{
@@ -1095,6 +1109,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
                                 var colors = tooltip.labelColors[ i ];
                                 var style = 'background:' + colors.backgroundColor;
                                 var span = '<span class="chartjs-tooltip__color" style="' + style + '"></span>';
+                                if (percentage) body += '%';
                                 innerHtml += '<div class="chartjs-tooltip__item">' + span + '<span>' + body + '</span></div>';
                             });
                             innerHtml += '</div>';
@@ -1260,7 +1275,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
             }),
         ];
 
-        this.renderLineChart(containerId, datasets, tamponi.l);
+        this.renderLineChart(containerId, datasets, tamponi.l, null, true);
     };
 
     /**
@@ -1269,17 +1284,29 @@ Math.easeInOutQuad = function (t, b, c, d) {
      */
     DatiProtezioneCivile.prototype.renderCaricoTerapiaIntensiva = function (id) {
         const containerId = id || 'caricoTerapieIntensive';
-        const capienza_massima = this.dati.capienza_terapie_intensive.nazionali;
-        const capienza_terapie_intensive = this.formatData(this.dati.capienza_terapie_intensive.regioni, 'capienza', 'denominazione_regione');
+        const capienza_massima = this.dati.capienza_terapie_intensive[this.dati.capienza_terapie_intensive.length - 1].nazionali;
+        this.dati.capienza_terapie_intensive[this.dati.capienza_terapie_intensive.length - 1].regioni.forEach((r, i) => {
+            r.carico = this.dati.incrementali.regioni[i].terapia_intensiva;
+            r.percentuale = (parseInt(r.carico) / parseInt(r.capienza) * 100).toFixed(2);
+        });
+        const capienza_terapie_intensive = this.formatData(this.dati.capienza_terapie_intensive[this.dati.capienza_terapie_intensive.length - 1].regioni, 'percentuale', 'denominazione_regione');
         const datasets = [
             {
                 backgroundColor: this.colors.positivi,
                 data: capienza_terapie_intensive.v,
                 label: 'Capienza terapie intensive',
             },
+            {
+                borderColor: this.colors.deceduti,
+                pointBackgroundColor: this.colors.deceduti,
+                label: 'Soglia di allarme',
+                data: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30],
+                type: 'line'
+            }
         ];
+        console.log('length: ', capienza_terapie_intensive.v.length);
         
-        this.renderBarChart(containerId, datasets, capienza_terapie_intensive.l);
+        this.renderBarChart(containerId, datasets, capienza_terapie_intensive.l, null, true);
     };
 
     /**
@@ -1491,11 +1518,11 @@ Math.easeInOutQuad = function (t, b, c, d) {
             {
                 backgroundColor: this.colors.rianimazione,
                 data: letalita.v,
-                label: 'Letalità (%)',
+                label: 'Letalità',
             },
         ];
 
-        this.renderBarChart(containerId, datasets, letalita.l);
+        this.renderBarChart(containerId, datasets, letalita.l, null, true);
     };
 
     /**

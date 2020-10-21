@@ -4,6 +4,10 @@ include ../components/table
 block content
     .container.max-width-xl
 
+        section.padding-y-sm.ultimo-aggiornamento
+            span Ultimo aggiornamento: 
+            span#dataUltimoAggiornamento 
+
         section.recap-cards
             .card.card--positivi
                 .card__title Attualmente positivi
@@ -57,7 +61,7 @@ block content
                     canvas#incrementaliTamponi
 
             .graph.graph--doughnut
-                h4.info-dati.dati-pcn Carico terapie intensive
+                h4.info-dati.dati-qs Carico terapie intensive
                 .graph__container
                     #caricoTerapieIntensiveLegend
                     canvas#caricoTerapieIntensive
@@ -78,7 +82,7 @@ block content
             h4.info-dati.dati-pcn Dati regionali
             +table(regioni)
 
-        section#alerts
+        //section#alerts
             .card.card--alert: .card-title Avviso: dati del 16/03 relativi a P.A. Trento e Puglia non pervenuti.
             .card.card--alert: .card-title Avviso: dati del 10/03 relativi alla Regione Lombardia non completi.
             .card.card--alert: .card-title Avviso: dati del 11/03 relativi alla Regione Abruzzo non pervenuti.

@@ -30,6 +30,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 0,
       "deceduti": 1,
       "totale_casi": 38,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 310
     },
     {
@@ -48,13 +50,15 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 0,
       "deceduti": 0,
       "totale_casi": 7,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 148
     },
     {
       "data": "2020-03-10 18:00:00",
       "stato": "ITA",
-      "codice_regione": 4,
-      "denominazione_regione": "Bolzano",
+      "codice_regione": 21,
+      "denominazione_regione": "P.A. Bolzano",
       "lat": 46.49933453,
       "long": 11.35662422,
       "ricoverati_con_sintomi": 17,
@@ -66,6 +70,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 0,
       "deceduti": 0,
       "totale_casi": 38,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 36
     },
     {
@@ -84,6 +90,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 2,
       "deceduti": 0,
       "totale_casi": 13,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 360
     },
     {
@@ -102,6 +110,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 1,
       "deceduti": 0,
       "totale_casi": 127,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 1141
     },
     {
@@ -120,6 +130,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 31,
       "deceduti": 85,
       "totale_casi": 1533,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 5494
     },
     {
@@ -138,6 +150,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 3,
       "deceduti": 3,
       "totale_casi": 116,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 1602
     },
     {
@@ -156,6 +170,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 11,
       "deceduti": 6,
       "totale_casi": 116,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 3591
     },
     {
@@ -174,6 +190,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 5,
       "deceduti": 8,
       "totale_casi": 141,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 694
     },
     {
@@ -192,6 +210,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 896,
       "deceduti": 468,
       "totale_casi": 5791,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 21479
     },
     {
@@ -210,6 +230,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 0,
       "deceduti": 13,
       "totale_casi": 394,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 1437
     },
     {
@@ -228,6 +250,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 0,
       "deceduti": 0,
       "totale_casi": 15,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 225
     },
     {
@@ -246,6 +270,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 0,
       "deceduti": 17,
       "totale_casi": 453,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 2374
     },
     {
@@ -264,6 +290,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 1,
       "deceduti": 3,
       "totale_casi": 59,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 747
     },
     {
@@ -282,6 +310,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 0,
       "deceduti": 0,
       "totale_casi": 20,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 204
     },
     {
@@ -300,6 +330,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 2,
       "deceduti": 0,
       "totale_casi": 62,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 955
     },
     {
@@ -318,13 +350,15 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 3,
       "deceduti": 1,
       "totale_casi": 264,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 2573
     },
     {
       "data": "2020-03-10 18:00:00",
       "stato": "ITA",
-      "codice_regione": 4,
-      "denominazione_regione": "Trento",
+      "codice_regione": 22,
+      "denominazione_regione": "P.A. Trento",
       "lat": 46.06893511,
       "long": 11.12123097,
       "ricoverati_con_sintomi": 19,
@@ -336,6 +370,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 2,
       "deceduti": 0,
       "totale_casi": 52,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 399
     },
     {
@@ -354,6 +390,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 0,
       "deceduti": 0,
       "totale_casi": 37,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 260
     },
     {
@@ -372,6 +410,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 0,
       "deceduti": 0,
       "totale_casi": 17,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 89
     },
     {
@@ -390,6 +430,8 @@ app.get('/', function (req, res) {
       "dimessi_guariti": 47,
       "deceduti": 26,
       "totale_casi": 856,
+      "nuovi_positivi": 0,
+      "casi_testati": 0,
       "tamponi": 16643
     }
   ];

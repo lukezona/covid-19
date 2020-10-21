@@ -1,6 +1,7 @@
 mixin header()
-  .container.max-width-xl: .padding-bottom-md.padding-top-sm
-    a(href='/'): img(src="/images/covid.svg" style='max-width: 250px')
+  .container.max-width-xl: .padding-bottom-md.padding-top-sm.flex.items-center(style='justify-content: space-between;')
+    a.flex(href='/'): img(src="/images/covid.svg" style='height: 70px; max-width: 250px')
+    .btn.btn--subtle#column-changer Vista colonne 
 
   block header
 
